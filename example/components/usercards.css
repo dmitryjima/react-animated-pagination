@@ -1,0 +1,11 @@
+.usercards {
+
+}
+
+@media (min-width: 640px) {
+    .usercards {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

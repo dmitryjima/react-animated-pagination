@@ -1,0 +1,26 @@
+.copyBtn {
+    position: absolute;
+    top: .3em;
+    right: .3em;
+
+    width: 5em;
+    height: 2em;
+
+
+    font-weight: bold;
+    color: rgb(121, 55, 121);
+    border: 1px solid;
+    border-color: rgb(121, 55, 121);
+    border-radius: 5px;
+
+    background-color: transparent;
+
+    outline: transparent;
+
+    transition: .2s ease-in-out;
+    cursor: pointer;
+}
+.copyBtn:hover {
+    color: white;
+    background-color: rgb(121, 55, 121);
+}

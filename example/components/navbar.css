@@ -1,0 +1,133 @@
+.navbar__containerDiv {
+    display: flex;
+    flex-direction: column;
+  
+    position: fixed;
+    top: 3em;
+  
+    z-index: 189;
+  
+    width: 80vw;
+    height: 100vh;
+  
+    background-color: rgb(202, 222, 235);
+
+  
+    transition: 0.5s ease-in-out;
+  }
+  .navbar__containerDiv--open {
+    left: 0;
+  
+    transition: 0.3s ease-in-out;
+  }
+  
+  .navbar__containerDiv--closed {
+    left: -80vw;
+  
+    transition: 0.3s ease-in-out;
+  }
+  
+  .navbar__closeBtn {
+    align-self: flex-end;
+  
+    margin-right: 1em;
+  
+    height: 3em;
+    width: 3em;
+  
+    background: none;
+    border: none;
+  
+    outline: transparent;
+    cursor: pointer;
+  }
+  .navbar__closeBtn > svg {
+    height: 3em;
+    width: 3em;
+  }
+  
+  .navbar__containerDiv > hr {
+    margin-top: 0;
+    width: 100%;
+    color: whitesmoke;
+  }
+  
+  .navbar__linksContainerDiv {
+    display: flex;
+    flex-direction: column;
+  
+    height: 100%;
+  
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .navbar__Link {
+    display: block;
+    margin: .3em;
+    margin-left: 1em;
+
+    font-size: larger;
+    font-weight: bold;
+    text-decoration: none;
+
+    transition: .2s ease-in-out;
+  }
+  .navbar__Link:hover {
+      color: tomato;
+  }
+  .navbar__Link--active {
+      color: tomato;
+  }
+  /* Scrollbar */
+  /* Width */
+  .navbar__linksContainerDiv::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  /* Track */
+  .navbar__linksContainerDiv::-webkit-scrollbar-track {
+    /* background: #f1f1f1;  */
+    background-color: var(--mainColorBiege);
+  }
+  
+  /* Handle */
+  .navbar__linksContainerDiv::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  .navbar__linksContainerDiv::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  @media (min-width: 1000px) {
+    .navbar__containerDiv {
+      position: fixed;
+  
+      left: 0;
+  
+      height: 70vh;
+      width: 17vw;
+  
+      transition: 0.4s ease-in-out;
+    }
+  
+    .navbar__containerDiv--open {
+      left: 0;
+      top: 3em;
+      visibility: visible;
+    }
+  
+    .navbar__containerDiv--closed {
+      left: 0;
+      top: -70vh;
+      visibility: hidden;
+    }
+  
+    .navbar__closeBtn {
+      display: none;
+    }
+  }
+  

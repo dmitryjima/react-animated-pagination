@@ -1,0 +1,44 @@
+.paginationControls {
+    display: flex;
+    flex-direction: row;
+  
+    flex-wrap: wrap;
+  
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  
+  .paginationContols__pageNoBtn {
+    display: block;
+  
+    background: transparent;
+    border: transparent;
+  
+    min-width: 2em;
+  
+    cursor: pointer;
+  }
+  .paginationContols__pageNoBtn--active {
+    border: 1px blue solid;
+  }
+  .paginationContols__pageNoBtn--hidden {
+    display: none;
+  }
+  .paginationContols__pageNoBtn--dotsAfter::after {
+    content: " ... ";
+    color: black;
+  }
+  .paginationContols__pageNoBtn--dotsBefore::before {
+    content: " ... ";
+    color: black;
+  }
+  
+  .paginationControls__arrowBtn {
+    display: block;
+  
+    background: transparent;
+    border: transparent;
+  
+    cursor: pointer;
+  }

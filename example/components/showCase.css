@@ -1,0 +1,16 @@
+.showcase__codeDiv {
+    position: relative;
+}
+
+
+.showcase {
+    padding: .3em;
+}
+
+
+@media (min-width: 640px) {
+    .showcase {
+        margin-left: 20vw;
+        margin-right: 20vw;
+    }
+}
