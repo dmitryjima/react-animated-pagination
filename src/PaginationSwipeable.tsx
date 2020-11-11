@@ -12,6 +12,9 @@ export type PaginationSwipeableTypes = {
     cloneKey: string,
     iterationKey?: string,
     customNavigation?: any,
+    customNextAnimation? : 'string',
+    customPrevAnimation? : 'string',
+    delay?: number,
     children: React.ReactElement
 }
 
@@ -24,6 +27,9 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
     cloneKey,
     iterationKey,
     customNavigation,
+    customNextAnimation,
+    customPrevAnimation,
+    delay,
     children
   }) => {
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -118,11 +124,13 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
             currentPageRef.current.offsetWidth;
         
             if (currentPage > pageNo) {
-              currentPageRef.current.style.animation = "prevPage .5s forwards";
+              currentPageRef.current.style.animation = customPrevAnimation ? customPrevAnimation : "prevPage .5s forwards";
             } else {
-              currentPageRef.current.style.animation = "nextPage .5s forwards";
+              currentPageRef.current.style.animation = customNextAnimation ? customNextAnimation : "nextPage .5s forwards";
             }
-            setCurrentPage(pageNo);
+            setTimeout(() => {
+              setCurrentPage(pageNo);
+            }, delay ? delay : 500) 
         }
     };
   

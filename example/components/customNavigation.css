@@ -1,4 +1,6 @@
 .paginationControlsCustom {
+    position: relative;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -31,4 +33,28 @@
 .paginationControlsCustom__pageNoBtn--active {
     background-color: rgba(117, 111, 111, 0.8);
     cursor: default;
+}
+
+
+/*  */
+
+.paginationControlsCustom__currentPageIndicator {
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+
+    height: 16px;
+    width: 16px;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 50%;
+    border: transparent;
+    
+    background-color: blue;
+    outline: transparent;
+
+
+    transition: .5s ease-in-out;
 }

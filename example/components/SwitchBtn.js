@@ -2,11 +2,11 @@ import React from "react";
 
 import './switchBtn.css';
 
-const SwitchBtn = ({ onChange, active }) => {
+const SwitchBtn = ({ onChange, active, disabled }) => {
 
     return (
         <label className="switchBtn">
-            <input type="checkbox" checked={active} onChange={(e) => onChange(e.target.value)} />
+            <input disabled={disabled} type="checkbox" checked={active} onChange={(e) => onChange(e.target.value)} />
             <span className="switchBtn__slider"></span>
         </label>
     )

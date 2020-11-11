@@ -12,7 +12,7 @@ const CopyBtn = ({ handleCopyToClipBoard }) => {
 
         setTimeout(() => {
             btnRef.current.textContent = "Copy";
-        }, 2000);
+        }, 1500);
     }
 
     return (

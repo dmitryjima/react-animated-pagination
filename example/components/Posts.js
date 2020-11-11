@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/styles/prism';
+import React, { useEffect, useState } from "react";
 
 import Post from "./Post";
 
@@ -8,22 +6,14 @@ import './showCase.css';
 
 import { PaginationAnimated, PaginationSwipeable } from '../../src/index'
 import CustomNavigation from "./CustomNavigation";
-import CopyBtn from "./CopyBtn";
 import SwitchBtn, { ToggleBtn } from "./SwitchBtn";
 import Slider from "./Slider";
+import PostEditor from "./PostEditor";
+import CodeDiv from "./CodeDiv";
 
 const Posts = () => {
-  let codeRef = useRef(null);
 
-  const handleCopyToClipBoard = () => {
-    navigator && navigator.clipboard.writeText(codeRef.current.firstChild.textContent)
-      .then(() => {
-        console.log('Copied!');
-        console.log(codeRef.current.firstChild.textContent);
-      })
-      .catch(err => console.log(err))
-  }
-
+  // Conrols-specific state
   const [paginationType, setPaginationType] = useState('PaginationSwipeable');
   const [infiniteScroll, setInfiniteScroll] = useState(false);
   const [bottomNav, setBottomNav] = useState(true);
@@ -31,7 +21,7 @@ const Posts = () => {
   const [typeOfNavigation, setTypeOfNavigation] = useState('standard')
   const [itemsOnPage, setItemsOnPage] = useState(10);
 
-  // Data-specific
+  // Data-specific state
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
@@ -40,6 +30,21 @@ const Posts = () => {
 
     setPosts((posts) => [...postsFiltered]);
   };
+
+  const handleAddPost = (post) => {
+    let workingArray = [...posts];
+
+    workingArray.unshift(post);
+
+    setPosts(posts => [...workingArray]);
+  }
+
+  const handleSavePost = (post) => {
+    let workingArray = [...posts];
+    let index = workingArray.findIndex(p => p.id === post.id);
+    workingArray[index] = {...post}
+    setPosts(posts => [...workingArray]);
+  }
 
   useEffect(() => {
     const fetchPosts = () => {
@@ -53,7 +58,6 @@ const Posts = () => {
         )
         .then((res) => res.json())
         .then(posts => {
-          console.log(posts)
             setPosts([...posts]);
             setIsLoading(false);
         })
@@ -68,37 +72,30 @@ const Posts = () => {
 
   return (
     <div className="showcase">
-      <h1>Posts</h1>
-      <h2>A list of posts with handlers and commmon state</h2>
+      <h1 style={{textAlign: 'center'}}>Posts</h1>
+      <h2 style={{textAlign: 'center'}}>A dynamic list of posts with handlers</h2>
       <div className="showcase__controlsDiv">
-        <div>
+        <div style={{width: '100%', textAlign: 'center'}}>
           PaginationAnimated <ToggleBtn active={paginationType === 'PaginationSwipeable' ? true : false} onChange={() => setPaginationType(paginationType === 'PaginationSwipeable' ? 'PaginationAnimated' : 'PaginationSwipeable')} /> PaginationSwipeable
-        </div>
-        {
-          paginationType === 'PaginationSwipeable'
-          ?
-          <div>
-            Infinite Scroll <SwitchBtn active={infiniteScroll} onChange={() => setInfiniteScroll(infiniteScroll ? false : true)}/>
-          </div>
-          :
-          null
-        }            
-        <div>
+        </div>     
+        <div style={{width: '48%', textAlign: 'center'}}>
         Bottom navigation <SwitchBtn active={bottomNav} onChange={() => setBottomNav(bottomNav ? false : true)}/>
         </div>
-        <div>
+        <div style={{width: '48%', textAlign: 'center'}}>
         Top navigation <SwitchBtn active={topNav} onChange={() => setTopNav(topNav ? false : true)}/>
-        </div>
-        <div>
+        </div>  
+        <div style={{width: '48%', textAlign: 'center'}}>
         Custom Navigation <SwitchBtn active={typeOfNavigation === 'custom'} onChange={() => setTypeOfNavigation(typeOfNavigation === 'custom' ? 'standart' : 'custom')}/>
-        </div>   
-        <div>
+        </div> 
+        <div style={{width: '48%', textAlign: 'center', opacity: paginationType !== 'PaginationSwipeable' ? '.5' : '1'}}>
+          Infinite Scroll <SwitchBtn disabled={paginationType !== 'PaginationSwipeable'} active={infiniteScroll} onChange={() => setInfiniteScroll(infiniteScroll ? false : true)}/>
+        </div> 
+        <div style={{width: '100%', textAlign: 'center'}}>
           Items on page: <Slider onChange={(value) => setItemsOnPage(value)} value={itemsOnPage}/>
         </div>
       </div>
-      <div ref={codeRef} className="showcase__codeDiv">
-        <SyntaxHighlighter language="jsx" style={atomDark}>
-          {
+      <CodeDiv
+      content={
 `<${paginationType}${paginationType === 'PaginationSwipeable' ? `\n  infiniteScroll={${infiniteScroll}}` : ''}
   bottomNav={${bottomNav ? true : false}}
   topNav={${topNav ? true : false}}${typeOfNavigation === 'custom' ? `\n  customNavigation={CustomNavigation}` : ''}
@@ -106,18 +103,26 @@ const Posts = () => {
   items={posts}
   cloneKey="post"
   iterationKey="id"
-  children={<Post handleDelete={handleDelete} />}
+  children={
+    <Post 
+      handleDelete={handleDelete} 
+      handleSaveChanges={handleSavePost} 
+    />
+  }
 />`
-          }
-        </SyntaxHighlighter>
-        <CopyBtn
-          handleCopyToClipBoard={handleCopyToClipBoard}
-        />
-      </div>
+}
+      />
       <div className="showcase__showcaseDiv">
       {isLoading && posts.length === 0 ? (
         <div>Loading...</div>
       ) : (
+        <>
+        <h3 style={{textAlign: 'center'}}>Add a new post</h3>
+        <PostEditor
+          post={{}}
+          handleSaveChanges={handleAddPost}
+        />
+        {
         paginationType === 'PaginationSwipeable'
         ?
         <PaginationSwipeable
@@ -129,7 +134,7 @@ const Posts = () => {
           iterationKey={'id'}
           cloneKey="post"
           customNavigation={typeOfNavigation === "custom" ? CustomNavigation : null}
-          children={<Post handleDelete={handleDelete} />}
+          children={<Post handleDelete={handleDelete} handleSaveChanges={handleSavePost} />}
         />
         :
         <PaginationAnimated
@@ -140,8 +145,10 @@ const Posts = () => {
         iterationKey={'id'}
         cloneKey="post"
         customNavigation={typeOfNavigation === "custom" ? CustomNavigation : null}
-        children={<Post handleDelete={handleDelete} />}
+        children={<Post handleDelete={handleDelete} handleSaveChanges={handleSavePost}  />}
       />
+      }
+      </>
       )}
       </div>
     </div>

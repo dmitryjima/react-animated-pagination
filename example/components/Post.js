@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import PostEditor from "./PostEditor";
 
-const Post = ({ post, handleDelete }) => {
+import './post.css';
+
+const Post = ({ post, handleDelete, handleSaveChanges }) => {
+  const [isEdited, setIsEdited] = useState(false);
+
   const deletePost = () => {
     handleDelete(post.id);
   };
   return (
-    <div className="post" onDoubleClick={deletePost}>
-      <h3>{post.title}</h3>
-      <p>{post.body}</p>
-    </div>
+    <>
+    {
+      !isEdited
+      ?
+      <div className="post">
+        <h3>{post.title}</h3>
+        <p>{post.body}</p>
+        <div className="post__btnsDiv">
+        <button
+          onClick={() => setIsEdited(true)}
+        >
+          Edit
+        </button>
+        <button
+          onClick={deletePost}
+        >
+          Delete
+        </button>
+        </div>
+      </div>
+      :
+      <PostEditor
+        post={post}
+        handleSaveChanges={handleSaveChanges}
+        handleCancel={() => setIsEdited(false)}
+      />
+    }
+    </>
   );
 };
 

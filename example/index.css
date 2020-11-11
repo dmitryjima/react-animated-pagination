@@ -5,6 +5,15 @@ body {
     margin: 0;
 }
 
+.App__topNav {
+    height: 3em; 
+    padding: 0; 
+    position: sticky;
+    top: 0; 
+    z-index: 100;
+    background-color: rgba(189, 218, 236, 0.98);
+}
+
 .navbar__toggleNavbarBtn {
     position: relative;
     top: 2px;
@@ -28,7 +37,7 @@ body {
   
     display: block;
   
-    background-color: rgb(44, 43, 43);
+    background-color: #2196F3;
   }
   .navbar__toggleNavbarBtn .navbar__toggleNavbarBtn__line:nth-child(2) {
     top: 20px;

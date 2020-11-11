@@ -3,7 +3,7 @@ import Usercard from "./Usercard";
 
 import { PaginationAnimated, PaginationSwipeable } from '../../src/index';
 
-import CustomNavigation from "./CustomNavigation";
+import CustomNavigation, { CustomNavigationUsercards } from "./CustomNavigation";
 
 import './usercards.css'
 
@@ -11,11 +11,18 @@ const Usercards = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setusers] = useState([]);
 
+  const [visibleUsers, setVisibleUsers] = useState([]);
+  const [searchItem, setSearchItem] = useState('');
+
   const handleDelete = (id) => {
     let usersFiltered = [...users.filter((p) => p.id !== id)];
 
     setusers((users) => [...usersFiltered]);
   };
+
+  const handleFilter = (e) => {
+    setSearchItem(e.target.value);
+  }
 
   useEffect(() => {
     const fetchusers = () => {
@@ -29,7 +36,12 @@ const Usercards = () => {
         )
         .then((res) => res.json())
         .then(users => {
-            setusers([...users]);
+            let workingUsers = [...users];
+            for (let i = 0; i < 10; i++) {
+              workingUsers[i].imgURL = `https://picsum.photos/id/100${i}/200/300`
+            }
+            setusers([...workingUsers]);
+            setVisibleUsers([...workingUsers]);
             setIsLoading(false);
         })
         .catch(err => {
@@ -41,21 +53,40 @@ const Usercards = () => {
     fetchusers();
   }, []);
 
+  useEffect(() => {
+    if (searchItem) {
+      console.log(searchItem)
+      let workingArray = users.filter(u => u.name.toLowerCase().includes(searchItem.toLowerCase()));
+      setVisibleUsers(vu => [...workingArray]);
+    } else {
+      setVisibleUsers(vu => [...users]);
+    }
+  }, [searchItem]);
+
   return (
-    <div className="usercards">
-      <h1>React Simple Pagination</h1>
-      <h2>This pagination is dynamically created</h2>
+    <div className="showcase">
+      <h1 style={{textAlign: 'center'}}>Usercards</h1>
+      <h2 style={{textAlign: 'center'}}>A searchable set of usercards with custom animation</h2>
+
+      <input
+        type="text"
+        placeholder='Type a name, e.g. "Clementine"'
+        onChange={e => handleFilter(e)}
+        value={searchItem}
+      />
       {isLoading && users.length === 0 ? (
         <div>Loading...</div>
       ) : (
         <PaginationSwipeable
-          bottomNav={true}
           topNav={true}
           itemsOnPage={1}
           infiniteScroll={true}
-          items={users}
+          items={visibleUsers}
           cloneKey="user"
-          customNavigation={CustomNavigation}
+          customNavigation={CustomNavigationUsercards}
+          customNextAnimation={'nextPageCustom 1s forwards'}
+          customPrevAnimation={'prevPageCustom 1s forwards'}
+          delay={300}
           children={<Usercard handleDelete={handleDelete} />}
         />
       )}

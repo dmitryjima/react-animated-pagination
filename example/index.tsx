@@ -23,7 +23,7 @@ const App = () => {
   return (
     <Router>
     <div className="App">
-      <nav className="App_topNav" style={{height: '3em', padding: '0', position: 'sticky', top: '.3em', zIndex: '100'}}>
+      <nav className="App__topNav">
         <button
           className={`navbar__toggleNavbarBtn ${
             isNavbarOpen
@@ -58,7 +58,7 @@ const App = () => {
             <Main/>
           </Route>
       </Switch>
-      <div style={{height: '10vh', width: '100%', backgroundColor: 'black', marginTop: '5em'}}>
+      <div style={{height: '10vh', width: '100%', backgroundColor: 'rgba(189, 218, 236, 0.98)', marginTop: '5em'}}>
 
       </div>
     </div>

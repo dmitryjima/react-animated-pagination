@@ -10,7 +10,7 @@
     width: 80vw;
     height: 100vh;
   
-    background-color: rgb(202, 222, 235);
+    background-color: rgba(236, 248, 255, .95);
 
   
     transition: 0.5s ease-in-out;
@@ -74,33 +74,12 @@
     transition: .2s ease-in-out;
   }
   .navbar__Link:hover {
-      color: tomato;
+      color: #2196F3;
   }
   .navbar__Link--active {
-      color: tomato;
-  }
-  /* Scrollbar */
-  /* Width */
-  .navbar__linksContainerDiv::-webkit-scrollbar {
-    width: 3px;
+      color: #2196F3;
   }
   
-  /* Track */
-  .navbar__linksContainerDiv::-webkit-scrollbar-track {
-    /* background: #f1f1f1;  */
-    background-color: var(--mainColorBiege);
-  }
-  
-  /* Handle */
-  .navbar__linksContainerDiv::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-  }
-  
-  /* Handle on hover */
-  .navbar__linksContainerDiv::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
   
   @media (min-width: 1000px) {
     .navbar__containerDiv {

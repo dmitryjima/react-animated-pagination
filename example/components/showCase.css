@@ -5,6 +5,20 @@
 
 .showcase {
     padding: .3em;
+
+    min-height: 80vh;
+}
+
+.showcase__controlsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.showcase__controlsDiv div {
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 

@@ -10,7 +10,7 @@ const Usercard = ({ user, handleDelete }) => {
     <div className="usercard" onDoubleClick={deleteUser}>
       <h3>{user.name}</h3>
       <h3>{user.username}</h3>
-      <img src={`https://picsum.photos/200/300?random=${Math.random() * 10}`} />
+      <img src={user.imgURL} />
     </div>
   );
 };
