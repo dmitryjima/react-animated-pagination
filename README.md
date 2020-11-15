@@ -81,6 +81,6 @@ const ParentComponent = ({ arrayOfObjects, commonState }) => {
 }
 ```
 
-Check out [interactive examples](https://react-animated-pagination.zdcreatech.com/posts) and the [API Reference](https://react-animated-pagination.zdcreatech.com/apireference) to see how to use different combinations of parameters and custom navigaton controls to create paginations and carousels.
+Check out interactive examples and the API Reference in the [DEMO](https://react-animated-pagination.zdcreatech.com) to see how to use different combinations of parameters and custom navigaton controls to create paginations and carousels.
 
 Source code can be found in the repository if you need a reference for custom navigation or want to create a similar component from scratch.

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import * as React from 'react';
 import { Navigation } from './Navigation';
 
