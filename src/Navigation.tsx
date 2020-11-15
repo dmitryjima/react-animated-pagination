@@ -93,6 +93,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
       className="paginationControls__arrowBtn"
       onClick={() => handlePageChange(0)}
       disabled={ currentPage === 0 ? true : false }
+      aria-label="First page"
     >
       <svg
         width="1em"
@@ -122,6 +123,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
         }
       }}
       disabled={ infiniteFlip !== undefined && infiniteFlip === true ? false : (currentPage === 0 ? true : false)}
+      aria-label="Previous page"
     >
       <svg
         className="bi bi-chevron-left"
@@ -179,6 +181,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
           key={index}
           onClick={() => handlePageChange(index)}
           disabled={index === currentPage}
+          aria-label={`Page number ${index + 1}`}
         >
           {index + 1}
         </button>
@@ -193,6 +196,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
         }
       }}
       disabled={infiniteFlip ? false : (currentPage === pages.length - 1 ? true : false)}
+      aria-label="Next page"
     >
       <svg
         className="bi bi-chevron-right"
@@ -213,6 +217,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
       className="paginationControls__arrowBtn"
       onClick={() => handlePageChange(pages.length - 1)}
       disabled={currentPage === pages.length -1 ? true : false }
+      aria-label="Last page"
     >
       <svg
         width="1em"

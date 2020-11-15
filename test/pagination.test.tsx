@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'
 
-import { PaginationSwipeable } from '../src';
+import { PaginationSwipeable, PaginationAnimated } from '../src';
 
 const sampleItems = [
   {
@@ -24,11 +26,27 @@ const SampleComponent: React.FC<{component? : any}> = ({
   );
 }
 
-describe('Basic rendering', () => {
+afterEach(cleanup)
+
+describe('Basic rendering of PaginationSwipeable', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
       <PaginationSwipeable  
+        items={sampleItems}
+        entryProp="component"
+        children={<SampleComponent/>}
+      />,
+      div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+});
+
+describe('Basic rendering of PaginationAnimated', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(
+      <PaginationAnimated
         items={sampleItems}
         entryProp="component"
         children={<SampleComponent/>}

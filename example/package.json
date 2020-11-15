@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "author": "Dmitry Zhukov",
+  "description": "An example website for react-animated-pagination",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"

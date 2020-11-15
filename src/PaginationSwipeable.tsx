@@ -365,6 +365,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
           onTouchMove={_onTouchMove}
           onTouchEnd={_onTouchEnd}
           onTouchCancel={_onTouchEnd}
+          aria-label="Current page"
         >
           {pages.length &&
             pages[currentPage] &&
