@@ -174,8 +174,6 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
     const handlePageChange = (pageNo: number) => {
 
       if (currentPageRef.current !== null) {     
-          currentPageRef.current.style.animation = "";
-          currentPageRef.current.offsetWidth;
       
           if (currentPage > pageNo) {
             currentPageRef.current.style.animation = customPrevAnimation ? customPrevAnimation : "prevPage .5s forwards";
@@ -249,6 +247,11 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
         <div
           ref={currentPageRef}
           className={`paginationContainer__currentPageDiv`}
+          onAnimationEnd={() => {
+            if (currentPageRef.current) {
+              currentPageRef.current.style.animation = ""
+            }
+         }}
         >
           {pages.length &&
             pages[currentPage] &&

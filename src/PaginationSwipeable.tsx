@@ -275,8 +275,6 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
   
     const handlePageChange = (pageNo: number) => {
         if (currentPageRef.current !== null) {      
-            currentPageRef.current.style.animation = "";
-            currentPageRef.current.offsetWidth;
         
             if (currentPage > pageNo) {
               currentPageRef.current.style.animation = customPrevAnimation ? customPrevAnimation : "prevPage .5s forwards";
@@ -365,6 +363,11 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
           onTouchMove={_onTouchMove}
           onTouchEnd={_onTouchEnd}
           onTouchCancel={_onTouchEnd}
+          onAnimationEnd={() => {
+             if (currentPageRef.current) {
+               currentPageRef.current.style.animation = ""
+             }
+          }}
           aria-label="Current page"
         >
           {pages.length &&
