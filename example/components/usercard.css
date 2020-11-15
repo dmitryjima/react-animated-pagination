@@ -1,9 +1,46 @@
 .usercard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
     text-align: center;
+
+    width: 20em;
+    height: 13em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: .3em;
+    margin-bottom: .3em;
+
+    border: 1px #2196F3 solid;
+    border-radius: 5px;
+
+    box-shadow: 1px 1px 2px 1px rgb(85, 85, 85);
+
+    padding: .3em;
 }
 
-.usercard {
+.usercard__img {
+    border-radius: 5px;
+    height: 10em;
+    width: auto;
+}
+
+.usercard__info {
+
+    max-height: 10em;
+}
+.usercard__info h4 {
+    font-size: small;
+    margin: .1em;
+    align-self: center;
+}
+.usercard__info div {
 
 }
 
-
+.usercard__removeUserBtn {
+    display: block;
+    width: 60%;
+}

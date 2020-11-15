@@ -2,11 +2,83 @@ import * as React from 'react';
 
 import './navigation.css';
 
+/**
+ * A set of types for creating custom Navigation components
+ * 
+ */
 export type NavigationTypes = {
-    handlePageChange: Function,
+    /**
+     * @param handlePageChange Handles changing the current visible page according to the provided index
+     * 
+     * @example
+     * ```
+     * <button
+     *   handlePageChange(currentPage + 1)
+     * >
+     *   Next page
+     * </button>
+     * ```
+     */
+    handlePageChange: (arg0: number) => void,
+    /**
+     * @param currentPage The item in the pages array currently displayed in the pagination
+     * 
+     * @example
+     * ```
+     * <button
+     *   handlePageChange(currentPage + 1)
+     * >
+     *   Next page
+     * </button>
+     * ```
+     */
     currentPage: number,
-    pages: any[],
-    infiniteScroll? : boolean
+    /**
+     * @param pages The array of pages generated from the items passed to the Pagination component
+     * 
+     * @example
+     * ```
+     * pages.map((_page: any, index: any) => (
+     *   <button
+     *     onClick={() => handlePageChange(index)}
+     *   >
+     *     {index + 1}
+     *   </button>
+     * ))
+     * ```
+     */
+    pages: [][],
+    /**
+     * @param infiniteScroll Is the infiniteScroll allowed (on PaginationSwipeable component)
+     * 
+     * @example 
+     * ```
+     * if (!pages[currentPage - 1] && infiniteScroll) {
+     *   handlePageChange(pages.length - 1);
+     * }
+     * ```
+     */
+    infiniteScroll? : boolean,
+    /**
+     * @param getContainerRef Returns a reference to the pagination container <div> element
+     * 
+     * @example
+     * ```
+     * let containerRef = getContainerRef();
+     * containerRef.addEventListener(...)
+     * ```
+     */
+    getContainerRef?: () => HTMLDivElement,
+    /**
+     * @param getCurrentPageRef Returns a reference to the current page <div> element
+     * 
+     * @example
+     * ```
+     * let currentPageRef = getCurrentPageRef();
+     * currentPageRef.addEventListener(...)
+     * ```
+     */
+    getCurrentPageRef?: () => HTMLDivElement
 }
 
 export const Navigation: React.FC<NavigationTypes> = ({ 
@@ -15,8 +87,6 @@ export const Navigation: React.FC<NavigationTypes> = ({
     pages,
     infiniteScroll
 }) => {
-  console.log(infiniteScroll)
-
   return (
     <div className="paginationControls">
     <button

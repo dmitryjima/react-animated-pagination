@@ -4,40 +4,192 @@ import { Navigation } from './Navigation';
 import './pagination.css';
 
 export type PaginationSwipeableTypes = {
+  /** 
+   * @param items An array of JavaScript Objects to be paginated
+   * 
+   * @example items={fetchedArray}
+   * */
     items: Array<any>,
-    itemsOnPage: number,
+  /**
+   * @param itemsOnPage A number of items on each page, defaults to 5 
+   * 
+   * @example itemsOnPage={10}
+  */
+    itemsOnPage?: number,
+  /** 
+   * @param topNav To show top navigation or not
+   * 
+   * If neither @param bottomNav nor @param topNav are specified, defaults to showing top navigation
+   * 
+   * @example topNav={true}
+   */
     topNav?: boolean,
+  /** 
+   * @param bottomNav To show bottom navigation or not
+   * 
+   * If neither @param bottomNav nor @param topNav are specified, defaults to showing top navigation
+   * 
+   * @example bottomNav={true}
+   */
     bottomNav?: boolean,
+  /** 
+   * @param infiniteScroll Allow infinite scrolling of the pages (only on PaginationSwipeable)
+   * 
+   * @example infiniteScroll={true}
+   */ 
     infiniteScroll?: boolean,
-    cloneKey: string,
+  /** 
+   * @param entryProp The prop to be cloned during the iteration process
+   * 
+   * @example 
+   * 
+   * ```
+   * const MyComponent = ({ component }) => {...}
+   * 
+   * ...
+   * 
+   * <PaginationSwipeable
+   *   entryProp="component"
+   *   children={<MyComponent />}
+   *   ...
+   * />
+   * ```
+   */
+    entryProp: string,
+   /**
+   * @param iterationKey The key for the iteration to tell React which field of the Object to use as key prop during the iteration. 
+   * 
+   * Defaults to "id", fallbacks to the item's index (**warning**: indices are not reliable iteration keys)
+   * 
+   * @example iterationKey="_id"
+   */    
     iterationKey?: string,
+   /**
+   * @param customNavigation Custom Navigation component to use instead of the built-in one.
+   * 
+   * @example 
+   * ```
+   * import MyNavigation from "./MyNavigation.js";
+   * ...
+   * customNavigation={MyNavigation}
+   * ```
+   */
     customNavigation?: any,
+   /**
+   * @param customNextAnimation The CSS transition animation to the next page.
+   * 
+   * **Note**: animation should be in the Parent's scope to run correctly.
+   * 
+   * @example 
+   * ```
+   * import "./myAnimations.css";
+   * ...
+   * customNextAnimation="myNextAnimation 1s forwards"
+   * ```
+   */
     customNextAnimation? : 'string',
+   /**
+   * @param customPrevAnimation The CSS transition animation to the previous page.
+   * 
+   * **Note**: animation should be in the Parent's scope to run correctly.
+   * 
+   * @example 
+   * ```
+   * import "./myAnimations.css";
+   * ...
+   * customPrevAnimation="myPrevAnimation 1s forwards"
+   * ```
+   */
     customPrevAnimation? : 'string',
+  /**
+   * @param delay The delay of switching the pages in milliseconds.
+   * 
+   * Can be used for achieving smoother custom animation effects.
+   * 
+   * @example delay={30}
+   */
     delay?: number,
+  
+  /**
+   * @param touchSensitivity A number representing touch sensititvity: from which point to start dragging the page, at which point to run changing to the next/previous page
+   * 
+   * Defaults to 30
+   * 
+   * @example touchSensitivity={10}
+   */
+    touchSensitivity?: number,
+  /**
+   * @param children The React Component to be rendered in the pagination, all the props except for the @param entryProp can be directly passed here. 
+   * 
+   * @example 
+   * 
+   * ```
+   * const MyComponent = ({ component }) => {...}
+   * 
+   * ...
+   * 
+   * <PaginationSwipeable
+   *   entryProp="component"
+   *   children={<MyComponent />}
+   *   ...
+   * />
+   * ```
+   */
     children: React.ReactElement
 }
 
+
+/**
+ * Pagination component with swipe support on touch screens
+ * 
+ * @example 
+ * ```
+ * <PaginationSwipeable
+ *   infiniteScroll={true}
+ *   bottomNav={true}
+ *   topNav={true}
+ *   itemsOnPage={5}
+ *   customNavigation={CustomNavigation}
+ *   customNextAnimation={'nextPageCustom .7s forwards'}
+ *   customPrevAnimation={'prevPageCustom .7s forwards'}
+ *   delay={300}
+ *   touchSensitivity={10}
+ *   items={arrayOfObjects}
+ *   entryProp="component"
+ *   iterationKey="_id"
+ *   children={
+ *     <MyComponent 
+ *       handleDelete={handleDelete} 
+ *       handleEdit={handleEdit} 
+ *       commonState={commonState}
+ *     />}
+ * />
+ * ```
+ */
 export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
     items,
     itemsOnPage,
     topNav,
     bottomNav,
     infiniteScroll,
-    cloneKey,
+    entryProp,
     iterationKey,
     customNavigation,
     customNextAnimation,
     customPrevAnimation,
     delay,
+    touchSensitivity,
     children
   }) => {
+    let _touchSensitivity = touchSensitivity ? touchSensitivity : 30
     const [currentPage, setCurrentPage] = React.useState(0);
     const [pages, setPages] = React.useState<Array<any>>([]);
 
     const CustomNavigation = customNavigation;
   
     let currentPageRef = React.useRef<HTMLDivElement>(null);
+
+    let containerRef = React.useRef<HTMLDivElement>(null);
   
     // Touch
     const [isDragging, setIsDragging] = React.useState(false);
@@ -70,38 +222,43 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
       }
       const { left } = extractPositionDelta(event.nativeEvent.touches[0]);
   
-      if (Math.abs(posLeft) + Math.abs(left) > 30) {
+      if (Math.abs(posLeft) + Math.abs(left) > _touchSensitivity) {
         setPosLeft(posLeft + left);
       }
     };
   
     const _onTouchEnd = (_event: any) => {
-      setIsDragging(false);
-  
       let delta = Math.abs(prevLeft) - Math.abs(posLeft);
   
-      console.log(`postLeft: ${posLeft}`);
-      console.log(`prevLeft: ${delta}`);
-      console.log(`delta abs(prevLeft - posLeft): ${delta}`);
-      console.log(`initialTouch: ${initialTouch}`);
-  
-      if (delta < -30 && posLeft < initialTouch) {
+      if (delta < -_touchSensitivity && posLeft < initialTouch) {
         if (pages[currentPage + 1]) {
           handlePageChange(currentPage + 1)
         } else if (!pages[currentPage + 1] && infiniteScroll) {
           handlePageChange(0)
+        } else {
+          setPosLeft(0);
+          setPrevLeft(0);
+          setInitialTouch(0);
+          setIsDragging(false);
         }
-      } else if (delta > 30 && posLeft > initialTouch) {
+      } else if (delta > _touchSensitivity && posLeft > initialTouch) {
         if (pages[currentPage - 1]) {
           handlePageChange(currentPage - 1)
         } else if (!pages[currentPage - 1] && infiniteScroll) {
           handlePageChange(pages.length - 1)
+        } else {
+          setPosLeft(0);
+          setPrevLeft(0);
+          setInitialTouch(0);
+          setIsDragging(false);
         }
+      } else {
+        setPosLeft(0);
+        setPrevLeft(0);
+        setInitialTouch(0);
+        setIsDragging(false);
       }
   
-      setPosLeft(0);
-      setPrevLeft(0);
-      setInitialTouch(0);
     };
   
     const extractPositionDelta = (event: any) => {
@@ -117,9 +274,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
     };
   
     const handlePageChange = (pageNo: number) => {
-        if (currentPageRef.current !== null) {
-            console.log(currentPageRef.current.style.animation);
-        
+        if (currentPageRef.current !== null) {      
             currentPageRef.current.style.animation = "";
             currentPageRef.current.offsetWidth;
         
@@ -130,7 +285,12 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
             }
             setTimeout(() => {
               setCurrentPage(pageNo);
-            }, delay ? delay : 500) 
+              setPosLeft(0);
+              setPrevLeft(0);
+              setInitialTouch(0);
+              setIsDragging(false);
+            }, delay ? delay : 0) 
+
         }
     };
   
@@ -172,7 +332,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
     }, []);
   
     return (
-      <div className="pagintaion__paginationContainer" >
+      <div className="pagination__paginationContainer" ref={containerRef}>
         {
         topNav || (!bottomNav && !topNav) 
         ? 
@@ -184,6 +344,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 currentPage={currentPage}
                 pages={pages}
                 infiniteScroll={infiniteScroll}
+                getContainerRef={() => containerRef.current}
             />
             :
             <Navigation
@@ -209,7 +370,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
             pages[currentPage] &&
             pages[currentPage].map((item: any, index: number) => {
               let objectToClone: any = {};
-              objectToClone[cloneKey] = item;
+              objectToClone[entryProp] = item;
               return (
                 <React.Fragment key={iterationKey ? item[iterationKey] : (item.id ? item.id : index) }>
                   {React.cloneElement(children, objectToClone)}
@@ -228,6 +389,8 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 currentPage={currentPage}
                 pages={pages}
                 infiniteScroll={infiniteScroll}
+                getContainerRef={() => containerRef.current}
+                getCurrentPageRef={() => currentPageRef.current}
             />
             :
             <Navigation

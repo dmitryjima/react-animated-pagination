@@ -1,0 +1,57 @@
+.paginationControlsCustomUsercards {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.paginationControlsCustomUsercards__pageNoBtn {
+    box-sizing: border-box;
+    display: block;
+
+    height: 16px;
+    width: 16px;
+
+    margin: .5em;
+    padding: 0;
+
+    border-radius: 50%;
+    border: transparent;
+    
+    background-color: #2196F3;
+    outline: transparent;
+
+    transition: .3s ease-in-out;
+    cursor: pointer;
+}
+.paginationControlsCustomUsercards__pageNoBtn:active {
+    background-color: #2195f37e;
+}
+.paginationControlsCustomUsercards__pageNoBtn--active {
+    background-color: #2195f37e;
+    cursor: default;
+}
+
+.paginationControlsCustomUsercards__currentPageIndicator {
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+
+    height: 16px;
+    width: 16px;
+
+    margin: 0;
+
+    border-radius: 50%;
+    border: transparent;
+    
+    background-color: transparent;
+    border: 3px #2196F3 solid;
+    padding: 9px;
+    outline: transparent;
+    
+    transition: .5s ease-in-out;
+}

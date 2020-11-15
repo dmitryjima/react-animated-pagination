@@ -10,6 +10,7 @@ import SwitchBtn, { ToggleBtn } from "./SwitchBtn";
 import Slider from "./Slider";
 import PostEditor from "./PostEditor";
 import CodeDiv from "./CodeDiv";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Posts = () => {
 
@@ -101,7 +102,7 @@ const Posts = () => {
   topNav={${topNav ? true : false}}${typeOfNavigation === 'custom' ? `\n  customNavigation={CustomNavigation}` : ''}
   itemsOnPage={${itemsOnPage}}
   items={posts}
-  cloneKey="post"
+  entryProp="post"
   iterationKey="id"
   children={
     <Post 
@@ -114,7 +115,7 @@ const Posts = () => {
       />
       <div className="showcase__showcaseDiv">
       {isLoading && posts.length === 0 ? (
-        <div>Loading...</div>
+        <LoadingSpinner />
       ) : (
         <>
         <h3 style={{textAlign: 'center'}}>Add a new post</h3>
@@ -132,7 +133,7 @@ const Posts = () => {
           items={posts}
           infiniteScroll={infiniteScroll}
           iterationKey={'id'}
-          cloneKey="post"
+          entryProp="post"
           customNavigation={typeOfNavigation === "custom" ? CustomNavigation : null}
           children={<Post handleDelete={handleDelete} handleSaveChanges={handleSavePost} />}
         />
@@ -143,7 +144,7 @@ const Posts = () => {
         itemsOnPage={itemsOnPage}
         items={posts}
         iterationKey={'id'}
-        cloneKey="post"
+        entryProp="post"
         customNavigation={typeOfNavigation === "custom" ? CustomNavigation : null}
         children={<Post handleDelete={handleDelete} handleSaveChanges={handleSavePost}  />}
       />

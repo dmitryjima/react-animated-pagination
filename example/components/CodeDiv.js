@@ -6,7 +6,7 @@ import CopyBtn from "./CopyBtn";
 
 import './showCase.css';
 
-const CodeDiv = ({ content }) => {
+const CodeDiv = ({ content, codeblock }) => {
     let codeRef = useRef(null);
 
     const handleCopyToClipBoard = () => {
@@ -15,8 +15,8 @@ const CodeDiv = ({ content }) => {
     }
     return (
         <div ref={codeRef} className="showcase__codeDiv">
-            <SyntaxHighlighter language="jsx" style={tomorrow} wrapLongLines={true}>
-            {content}
+            <SyntaxHighlighter language={codeblock && codeblock.language ? codeblock.language : "jsx"} style={tomorrow}>
+            {codeblock && codeblock.content ? codeblock.content : content}
             </SyntaxHighlighter>
             <CopyBtn
             handleCopyToClipBoard={handleCopyToClipBoard}

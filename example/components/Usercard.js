@@ -7,10 +7,19 @@ const Usercard = ({ user, handleDelete }) => {
     handleDelete(user.id);
   };
   return (
-    <div className="usercard" onDoubleClick={deleteUser}>
-      <h3>{user.name}</h3>
-      <h3>{user.username}</h3>
-      <img src={user.imgURL} />
+    <div className="usercard">
+      <img src={user.imgURL} className="usercard__img"/>
+      <div className="usercard__info">
+        <h4>name</h4>
+        <div>{user.name}</div>
+        <h4>username</h4>
+        <div>{user.username}</div>
+        <h4>email</h4>
+        <div>{user.email}</div>
+      </div>
+      <button className="usercard__removeUserBtn" onClick={deleteUser}>
+        Remove user
+      </button>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const Main = () => {
                 infiniteScroll={true}
                 bottomNav={true}
                 topNav={true}
-                cloneKey="body"
+                entryProp="body"
                 iterationKey="id"
                 items={items}
                 itemsOnPage={1}
@@ -64,6 +64,7 @@ import { PaginationAnimated, PaginationSwipeable, NavigationTypes } from 'react-
                 }
             />
             <p>It is primaraly aimed at paginating relatively complex components that are strongly connected to their Parent.</p>
+            <p><strong>Warning:</strong> this module is slightly opinionated about the rendered components' structure, as it assumes that each component has an entry prop (e.g. <code>post</code> for a <code>PostComponent</code>). If this doesn't suit your components' structure, you can refer to the source code to create a pagination of your own.</p>
             <CodeDiv 
                 content={
 `
@@ -94,13 +95,13 @@ const MyComponent = ({
                         <code>items [Object]</code> - an array of JavaScript Objects to iterate through;
                     </li>
                     <li>
-                        <code>cloneKey string</code> - the name of the prop to be cloned during iteration, will be passed the whole Object as value (usually, <code>'post'</code> for <code>PostComponent</code>, <code>'user'</code> for <code>UserComponent</code>);
+                        <code>entryProp string</code> - the name of the prop to be cloned during iteration, the Object in the current cycle of iteration will be passed to it as value (usually, <code>'post'</code> for <code>PostComponent</code>, <code>'user'</code> for <code>UserComponent</code>);
                     </li>
                     <li>
                         <code>iterationKey string</code> - the key for the iteration to tell React which field of the Object to use as key prop during the iteration. Defaults to <code>id</code>, fallbacks to the item's <code>index</code> (warning: indices are not reliable iteration keys);
                     </li>
                     <li>
-                        <code>children React Component</code> - the React Component to be rendered, all the props except for cloned prop can be directly passed here.
+                        <code>children React Component</code> - the React Component to be rendered, all the props except for the <code>entryProp</code> can be directly passed here.
                     </li>
                 </ul>
             </div>
@@ -123,7 +124,7 @@ const ParentComponent = ({ arrayOfObjects, commonState }) => {
         topNav={true}
         itemsOnPage={5}
         items={arrayOfObjects}
-        cloneKey="component"
+        entryProp="component"
         iterationKey="id"
         children={
             <MyComponent 

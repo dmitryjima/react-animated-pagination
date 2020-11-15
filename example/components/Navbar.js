@@ -180,20 +180,6 @@ const Navbar = ({
             >
                 Image gallery
             </NavLink>
-            <NavLink    
-                className="navbar__Link"
-                activeClassName="navbar__Link--active"
-                onClick={() => {
-                    closeOnClick
-                    ?
-                    closeNavbar()
-                    :
-                    voidFunction()
-                }} 
-                to="/navigation"
-            >
-                Navigation
-            </NavLink>
             <NavLink  
                 className="navbar__Link"
                 activeClassName="navbar__Link--active"

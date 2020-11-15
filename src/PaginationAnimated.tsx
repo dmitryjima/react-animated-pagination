@@ -4,26 +4,166 @@ import { Navigation } from './Navigation';
 import './pagination.css';
 
 export type PaginationAnimatedTypes = {
-    items: Array<any>,
-    itemsOnPage: number,
-    topNav: boolean,
-    bottomNav: boolean,
-    cloneKey: string,
+  /** 
+   * @param items An array of JavaScript Objects to be paginated
+   * 
+   * @example items={fetchedArray}
+   * */
+  items: Array<any>,
+  /**
+   * @param itemsOnPage A number of items on each page, defaults to 5 
+   * 
+   * @example itemsOnPage={10}
+  */
+    itemsOnPage?: number,
+  /** 
+   * @param topNav To show top navigation or not
+   * 
+   * If neither @param bottomNav nor @param topNav are specified, defaults to showing top navigation
+   * 
+   * @example topNav={true}
+   */
+    topNav?: boolean,
+  /** 
+   * @param bottomNav To show bottom navigation or not
+   * 
+   * If neither @param bottomNav nor @param topNav are specified, defaults to showing top navigation
+   * 
+   * @example bottomNav={true}
+   */
+    bottomNav?: boolean,
+  /** 
+   * @param entryProp The prop to be cloned during the iteration process
+   * 
+   * @example 
+   * 
+   * ```
+   * const MyComponent = ({ component }) => {...}
+   * 
+   * ...
+   * 
+   * <PaginationAnimated
+   *   entryProp="component"
+   *   children={<MyComponent />}
+   *   ...
+   * />
+   * ```
+   */
+    entryProp: string,
+   /**
+   * @param iterationKey The key for the iteration to tell React which field of the Object to use as key prop during the iteration. 
+   * 
+   * Defaults to "id", fallbacks to the item's index (**warning**: indices are not reliable iteration keys)
+   * 
+   * @example iterationKey="_id"
+   */    
     iterationKey?: string,
+   /**
+   * @param customNavigation Custom Navigation component to use instead of the built-in one.
+   * 
+   * @example 
+   * ```
+   * import MyNavigation from "./MyNavigation.js";
+   * ...
+   * customNavigation={MyNavigation}
+   * ```
+   */
     customNavigation?: any,
+   /**
+   * @param customNextAnimation The CSS transition animation to the next page.
+   * 
+   * **Note**: animation should be in the Parent's scope to run correctly.
+   * 
+   * @example 
+   * ```
+   * import "./myAnimations.css";
+   * ...
+   * customNextAnimation="myNextAnimation 1s forwards"
+   * ```
+   */
+    customNextAnimation? : 'string',
+   /**
+   * @param customPrevAnimation The CSS transition animation to the previous page.
+   * 
+   * **Note**: animation should be in the Parent's scope to run correctly.
+   * 
+   * @example 
+   * ```
+   * import "./myAnimations.css";
+   * ...
+   * customPrevAnimation="myPrevAnimation 1s forwards"
+   * ```
+   */
+    customPrevAnimation? : 'string',
+  /**
+   * @param delay The delay of switching the pages in milliseconds.
+   * 
+   * Can be used for achieving smoother custom animation effects.
+   * 
+   * @example delay={30}
+   */
+    delay?: number,
+  /**
+   * @param children The React Component to be rendered in the pagination, all the props except for the @param entryProp can be directly passed here. 
+   * 
+   * @example 
+   * 
+   * ```
+   * const MyComponent = ({ component }) => {...}
+   * 
+   * ...
+   * 
+   * <PaginationAnimated
+   *   entryProp="component"
+   *   children={<MyComponent />}
+   *   ...
+   * />
+   * ```
+   */
     children: React.ReactElement
 }
 
+
+/**
+ * Pagination component with customizable transition animations
+ * 
+ * @example 
+ * ```
+ * <PaginationAnimated
+ *   bottomNav={true}
+ *   topNav={true}
+ *   itemsOnPage={5}
+ *   customNavigation={CustomNavigation}
+ *   customNextAnimation={'nextPageCustom .7s forwards'}
+ *   customPrevAnimation={'prevPageCustom .7s forwards'}
+ *   delay={300}
+ *   items={arrayOfObjects}
+ *   entryProp="component"
+ *   iterationKey="_id"
+ *   children={
+ *     <MyComponent 
+ *       handleDelete={handleDelete} 
+ *       handleEdit={handleEdit} 
+ *       commonState={commonState}
+ *     />}
+ * />
+ * ```
+ */
 export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
     items,
     itemsOnPage,
     topNav,
     bottomNav,
-    cloneKey,
+    entryProp,
     iterationKey,
     customNavigation,
+    customNextAnimation,
+    customPrevAnimation,
+    delay,
     children
-  }) => {
+  }) => {    
+    let containerRef = React.useRef<HTMLDivElement>(null);
+    
     const [currentPage, setCurrentPage] = React.useState(0);
     const [pages, setPages] = React.useState<Array<any>>([]);
 
@@ -33,18 +173,19 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
   
     const handlePageChange = (pageNo: number) => {
 
-      if (currentPageRef.current !== null) {
-          console.log(currentPageRef.current.style.animation);
-      
+      if (currentPageRef.current !== null) {     
           currentPageRef.current.style.animation = "";
           currentPageRef.current.offsetWidth;
       
           if (currentPage > pageNo) {
-            currentPageRef.current.style.animation = "prevPage .5s forwards";
+            currentPageRef.current.style.animation = customPrevAnimation ? customPrevAnimation : "prevPage .5s forwards";
           } else {
-            currentPageRef.current.style.animation = "nextPage .5s forwards";
+            currentPageRef.current.style.animation = customNextAnimation ? customNextAnimation : "nextPage .5s forwards";
           }
-          setCurrentPage(pageNo);
+
+          setTimeout(() => {
+            setCurrentPage(pageNo);
+          }, delay ? delay : 0) 
       }
     };
   
@@ -82,7 +223,7 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
     }, []);
   
     return (
-      <div className="pagintaion__paginationContainer">
+      <div className="pagination__paginationContainer">
         {
         topNav || (!bottomNav && !topNav) 
         ? 
@@ -93,6 +234,7 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
+                getContainerRef={() => containerRef.current}
             />
             :
             <Navigation
@@ -112,7 +254,7 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
             pages[currentPage] &&
             pages[currentPage].map((item: any, index: number) => {
               let objectToClone: any = {};
-              objectToClone[cloneKey] = item;
+              objectToClone[entryProp] = item;
               return (
                 <React.Fragment key={iterationKey ? item[iterationKey] : (item.id ? item.id : index) }>
                   {React.cloneElement(children, objectToClone)}
@@ -130,6 +272,7 @@ export const PaginationAnimated: React.FC<PaginationAnimatedTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
+                getContainerRef={() => containerRef.current}
             />
             :
             <Navigation

@@ -2,14 +2,15 @@ import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-
-//import { NavigationTypes } from '../src/index'
+import ScrollToTop from './components/ScrollToTop';
 
 import Navbar from './components/Navbar';
 
 import Main from "./components/Main";
 import Posts from './components/Posts';
 import Usercards from './components/Usercards';
+import ImageGallery from './components/ImageGallery';
+import APIReference from './components/APIReference';
 
 import './index.css'
 
@@ -22,6 +23,7 @@ const App = () => {
 
   return (
     <Router>
+    <ScrollToTop />
     <div className="App">
       <nav className="App__topNav">
         <button
@@ -54,11 +56,17 @@ const App = () => {
           <Route path="/usercards">
             <Usercards/ >
           </Route>
+          <Route path="/imagegallery">
+            <ImageGallery />
+          </Route>
+          <Route path="/apireference">
+            <APIReference />
+          </Route>
           <Route path="/">
             <Main/>
           </Route>
       </Switch>
-      <div style={{height: '10vh', width: '100%', backgroundColor: 'rgba(189, 218, 236, 0.98)', marginTop: '5em'}}>
+      <div className="footer" style={{height: '10vh', width: '100%', backgroundColor: 'rgba(189, 218, 236, 0.98)', marginTop: '5em'}}>
 
       </div>
     </div>

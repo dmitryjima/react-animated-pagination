@@ -1,0 +1,37 @@
+.apiRef {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.apiRef__navlink {
+    box-sizing: border-box;
+    display: block;
+
+    padding: .7em;
+    margin: .5em;
+
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+
+    border: 1px solid #2196F3;
+    
+    background-color: #2d2d2d;
+    border-radius: 3px;
+    outline: transparent;
+
+    transition: .3s ease-in-out;
+    cursor: pointer;
+}
+.apiRef__navlink:hover {
+    background-color: #2196F3;
+}
+.apiRef__navlink--active {
+    background-color: #2196F3;
+    cursor: default;
+}

@@ -1,0 +1,40 @@
+.paginationControlsCustomCode {
+    position: relative;
+
+    min-height: calc(16px + 1em);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.paginationControlsCustomCode__pageNoBtn {
+    box-sizing: border-box;
+    display: block;
+
+    padding: .7em;
+    margin: .5em;
+
+    color: white;
+    font-weight: bold;
+
+    border: 1px solid #2196F3;
+    
+    background-color: #2d2d2d;
+    border-radius: 3px;
+    outline: transparent;
+
+    transition: .3s ease-in-out;
+    cursor: pointer;
+}
+.paginationControlsCustomCode__pageNoBtn:hover {
+    background-color: #2196F3;
+}
+.paginationControlsCustomCode__pageNoBtn--active {
+    background-color: #2196F3;
+    cursor: default;
+}
+

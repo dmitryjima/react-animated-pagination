@@ -1,38 +1,28 @@
-.pagintaion__paginationContainer {
+.pagination__paginationContainer {
     position: relative;
     overflow-x: hidden;
-  }
-    
-  .paginationContainer__currentPageDiv {
-  }
-  .paginationContainer__currentPageDiv--next {
-    animation: nextPage 1s forwards;
-  }
-  .paginationContainer__currentPageDiv--prev {
-    animation: prevPage 1s forwards;
-  }
+}
   
-  @keyframes nextPage {
-    0% {
-      opacity: 0;
-      transform: translate(10em, 0);
-    }
-  
-    100% {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
+@keyframes nextPage {
+  0% {
+    opacity: 0;
+    transform: translate(10em, 0);
   }
-  
-  @keyframes prevPage {
-    0% {
-      opacity: 0;
-      transform: translate(-10em, 0);
-    }
-  
-    100% {
-      opacity: 1;
-      transform: translate(0, 0);
-    }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
   }
-  
+}
+
+@keyframes prevPage {
+  0% {
+    opacity: 0;
+    transform: translate(-10em, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

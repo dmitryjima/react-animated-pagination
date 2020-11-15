@@ -1,0 +1,73 @@
+.image {
+
+}
+
+.image__img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 30vh;
+    width: auto;
+}
+.image__author {
+    opacity: 0;
+    text-align: center;
+    margin-top: .5em;
+    margin-bottom: .5em;
+
+    animation: fadeIn .7s .7s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes nextPageCustomImages {
+    0% {
+      opacity: 1;
+    }
+
+    49% {
+      opacity: 0;
+      transform: translate(-10em, 0);
+    }
+
+    50% {
+      opacity: 0;
+      transform: translate(10em, 0);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+}
+
+@keyframes prevPageCustomImages {
+    0% {
+      opacity: 1;
+
+    }
+
+    49% {
+      opacity: 0;
+      transform: translate(10em, 0);
+    }
+
+    50% {
+      opacity: 0;
+      transform: translate(-10em, 0);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+}

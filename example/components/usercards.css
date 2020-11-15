@@ -1,20 +1,23 @@
-.usercards {
+.searchInput {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
 
-}
+    width: 15em;
+    height: 1.5em;
 
-@media (min-width: 640px) {
-    .usercards {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    padding: .3em;
+
+    border: 1px solid #2196F3;
+    border-radius: 3px;
 }
 
 
 @keyframes nextPageCustom {
     0% {
       opacity: 1;
-      transform: scale(1);
     }
 
     49% {

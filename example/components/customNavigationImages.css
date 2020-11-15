@@ -1,6 +1,4 @@
-.paginationControlsCustom {
-    position: relative;
-
+.paginationControlsCustomImages {
     min-height: calc(16px + 1em);
 
     display: flex;
@@ -8,10 +6,9 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
 }
 
-.paginationControlsCustom__pageNoBtn {
+.paginationControlsCustomImages__pageNoBtn {
     box-sizing: border-box;
     display: block;
 
@@ -30,12 +27,32 @@
     transition: .3s ease-in-out;
     cursor: pointer;
 }
-.paginationControlsCustom__pageNoBtn:active {
+.paginationControlsCustomImages__pageNoBtn:active {
     background-color: rgba(117, 111, 111, 0.8);
 }
-.paginationControlsCustom__pageNoBtn--active {
+.paginationControlsCustomImages__pageNoBtn--active {
     background-color: rgba(117, 111, 111, 0.8);
     cursor: default;
 }
 
 
+.paginationControlsCustomImages__arrowBtnLeft {
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+
+    display: block;
+    background-color: transparent;
+    border: transparent;
+
+}
+
+.paginationControlsCustomImages__arrowBtnRight {
+    position: absolute;
+    bottom: 50.5%;
+    right: 0;
+
+    display: block;
+    background-color: transparent;
+    border: transparent;
+}
