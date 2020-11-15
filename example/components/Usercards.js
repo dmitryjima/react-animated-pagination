@@ -90,51 +90,6 @@ const Usercards = () => {
     transform: translate(0, 0) scale(1);;
   }
 }
-
-@media(max-width: 800px) {
-  @keyframes nextPageCustom {
-      0% {
-        opacity: 0;
-      }
-  
-      49% {
-        opacity: 0;
-        transform: translate(-10em, 0) scale(.5);
-      }
-  
-      50% {
-        opacity: 0;
-        transform: translate(10em, 0) scale(.5);;
-      }
-    
-      100% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);;
-      }
-  }
-  
-  @keyframes prevPageCustom {
-      0% {
-        opacity: 0;
-        transform: scale(1);
-      }
-  
-      49% {
-        opacity: 0;
-        transform: translate(10em, 0) scale(.5);
-      }
-  
-      50% {
-        opacity: 0;
-        transform: translate(-10em, 0) scale(.5);;
-      }
-    
-      100% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);;
-      }
-  }
-}
   `
   },
   {

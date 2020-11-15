@@ -34,7 +34,8 @@ const ImageGallery = () => {
           customNavigation={CustomNavigationImages}
           customNextAnimation={'nextPageCustomImages 1s forwards'}
           customPrevAnimation={'prevPageCustomImages 1s forwards'}
-          delay={250}
+          delay={400}
+          touchSensitivity={10}
           children={<ImageComponent />}
         />
     );
@@ -99,122 +100,127 @@ export const CustomNavigationImages = ({
     handlePageChange,
     currentPage,
     pages,
-    infiniteFlip
-    }) => {
+    infiniteFlip,
+    getContainerRef
+  }) => {
     const [isAutomatic, setAutomatic] = useState(true);
-    
+  
     const automaticShow = () => {
-        if (pages[currentPage + 1]) {
+      if (pages[currentPage + 1]) {
         handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteFlip) {
+      } else if (!pages[currentPage + 1] && infiniteFlip) {
         handlePageChange(0)
-        }
+      }
     }
-    
+  
     const scrollNext = useCallback(() => {
-        setAutomatic(false);
-        if (pages[currentPage + 1]) {
+      setAutomatic(false);
+      if (pages[currentPage + 1]) {
         handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteFlip) {
+      } else if (!pages[currentPage + 1] && infiniteFlip) {
         handlePageChange(0)
-        }
+      }
     }, [handlePageChange, setAutomatic])
-    
+  
     const scrollPrev = useCallback(() => {
-        setAutomatic(false);
-        if (pages[currentPage + 1]) {
-        handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteFlip) {
-        handlePageChange(0)
-        }
+      setAutomatic(false);
+      if (pages[currentPage - 1]) {
+        handlePageChange(currentPage - 1)
+      } else if (!pages[currentPage - 1] && infiniteFlip) {
+        handlePageChange(pages.length - 1)
+      }
     }, [handlePageChange, setAutomatic]);
-    
+  
     const scrollTo = useCallback(index => {
-        setAutomatic(false);
-        handlePageChange(index)
+      setAutomatic(false);
+      handlePageChange(index)
     }, [handlePageChange, setAutomatic]);
-    
+  
     useEffect(() => {
-        if (!isAutomatic) return;
-    
-        if (isAutomatic) {
+      if (!isAutomatic) return;
+  
+      if (isAutomatic) {
         const interval = setInterval(automaticShow, 2500);
-    
+  
         return () => clearInterval(interval)
-        }
-    
+      }
+  
     }, [isAutomatic, pages, currentPage]);
-    
+  
     useEffect(() => {
-        const stopOnTouch = () => {
-        const paginationContainer = document.querySelector('.paginationContainer__currentPageDiv');
-        paginationContainer.addEventListener('mousedown', () => setAutomatic(false));
-        paginationContainer.addEventListener('touchstart', () => setAutomatic(false));
-        }
-    
-        stopOnTouch();
-    }, [setAutomatic])
-    
+      let cRef = getContainerRef();
+  
+      const stopOnTouch = () => setAutomatic(false)
+  
+      cRef.addEventListener('mousedown', stopOnTouch);
+      cRef.addEventListener('touchstart', stopOnTouch);
+  
+      return () => {
+        cRef.removeEventListener('mousedown', stopOnTouch);
+        cRef.removeEventListener('touchstart', stopOnTouch);
+      }
+    }, [])
+  
     return (
-        <div className="paginationControlsCustomImages">
+      <div className="paginationControlsCustomImages">
         <button
-            className="paginationControlsCustomImages__arrowBtnLeft"
-            onClick={() => scrollPrev()}
-            disabled={infiniteFlip !== undefined && infiniteFlip === true ? false : (currentPage === 0 ? true : false)}
+          className="paginationControlsCustomImages__arrowBtnLeft"
+          onClick={() => scrollPrev()}
+          disabled={infiniteFlip !== undefined && infiniteFlip === true ? false : (currentPage === 0 ? true : false)}
         >
-            <svg
+          <svg
             className="bi bi-chevron-left"
             width="2em"
             height="2em"
             viewBox="0 0 20 20"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
-            >
+          >
             <path
-                fillRule="evenodd"
-                d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z"
-                clipRule="evenodd"
+              fillRule="evenodd"
+              d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z"
+              clipRule="evenodd"
             />
-            </svg>
+          </svg>
         </button>
         {pages &&
-            pages.map((_page, index) => (
+          pages.map((_page, index) => (
             <button
-                className={\`paginationControlsCustomImages__pageNoBtn
-                    \${index === currentPage
-                    ? "paginationControlsCustomImages__pageNoBtn--active"
-                    : ""
+              className={\`paginationControlsCustomImages__pageNoBtn
+                  \${index === currentPage
+                  ? "paginationControlsCustomImages__pageNoBtn--active"
+                  : ""
                 }
-                    \`}
-                key={index}
-                onClick={() => scrollTo(index)}
-                disabled={index === currentPage}
+                  \`}
+              key={index}
+              onClick={() => scrollTo(index)}
+              disabled={index === currentPage}
             >
             </button>
-            ))}
+          ))}
         <button
-            className="paginationControlsCustomImages__arrowBtnRight"
-            onClick={() => scrollNext()}
-            disabled={infiniteFlip ? false : (currentPage === pages.length - 1 ? true : false)}
+          className="paginationControlsCustomImages__arrowBtnRight"
+          onClick={() => scrollNext()}
+          disabled={infiniteFlip ? false : (currentPage === pages.length - 1 ? true : false)}
         >
-            <svg
+          <svg
             className="bi bi-chevron-right"
             width="2em"
             height="2em"
             viewBox="0 0 20 20"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
-            >
+          >
             <path
-                fillRule="evenodd"
-                d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"
-                clipRule="evenodd"
+              fillRule="evenodd"
+              d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"
+              clipRule="evenodd"
             />
-            </svg>
+          </svg>
         </button>
-        </div>
+      </div>
     )
-    };
+  };
 `
     },
     {
