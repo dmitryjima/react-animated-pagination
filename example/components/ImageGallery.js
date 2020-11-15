@@ -7,6 +7,7 @@ import { PaginationAnimated, PaginationSwipeable } from '../../src/index'
 import { CustomNavigationCode, CustomNavigationImages } from "./CustomNavigation";
 
 import CodeDiv from "./CodeDiv";
+import LoadingSpinner from './LoadingSpinner';
 
 const codeBlocks = [
     {
@@ -331,20 +332,26 @@ const ImageGallery = () => {
       <div className="showcase">
         <h1 style={{textAlign: 'center'}}>Image gallery</h1>
         <h2 style={{textAlign: 'center'}}>An automated carousel of image components with custom navigation</h2>
-        <PaginationSwipeable
-          topNav={false}
-          bottomNav={true}
-          itemsOnPage={1}
-          infiniteFlip={true}
-          items={images}
-          entryProp="image"
-          customNavigation={CustomNavigationImages}
-          customNextAnimation={'nextPageCustomImages 1s forwards'}
-          customPrevAnimation={'prevPageCustomImages 1s forwards'}
-          delay={400}
-          touchSensitivity={10}
-          children={<ImageComponent />}
-        />
+        {
+          isLoading && images.length === 0
+          ?
+          <LoadingSpinner />
+          :
+          <PaginationSwipeable
+            topNav={false}
+            bottomNav={true}
+            itemsOnPage={1}
+            infiniteFlip={true}
+            items={images}
+            entryProp="image"
+            customNavigation={CustomNavigationImages}
+            customNextAnimation={'nextPageCustomImages 1s forwards'}
+            customPrevAnimation={'prevPageCustomImages 1s forwards'}
+            delay={400}
+            touchSensitivity={10}
+            children={<ImageComponent />}
+          />
+        }
         <div>
           This example uses a function to get reference to the Container element and disable slideshow on touch/mouse click. Should be used with caution as it slightly breaks the React-style unidirectional controlflow.
         </div>
