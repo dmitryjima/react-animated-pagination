@@ -40,7 +40,7 @@ const Main = () => {
         <div className="showcase">
             <h3 style={{textAlign: 'center'}}>A stateful ReactJS Component for dynamic pagination and carousel-like widgets🚀🚀🚀</h3>
             <PaginationSwipeable
-                infiniteScroll={true}
+                infiniteFlip={true}
                 bottomNav={true}
                 topNav={true}
                 entryProp="body"
@@ -55,7 +55,7 @@ const Main = () => {
             </div>
             <div>
             <h2>Usage</h2>
-            <p>This module exports two components <code>PaginationAnimated</code> (basic animated transitions), <code>PaginationSwipeable</code> (swipeable on touch screens and supports infinite scroll), and a type <code>NavigationTypes</code> for easier creation of custom pagination controls.</p>
+            <p>This module exports two components <code>PaginationAnimated</code> (basic animated transitions), <code>PaginationSwipeable</code> (swipeable on touch screens and supports infinite page flipping), and a <code>NavigationTypes</code> TS type for easier creation of custom pagination controls.</p>
             <CodeDiv
                 content={
 `

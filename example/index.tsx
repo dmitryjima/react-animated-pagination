@@ -66,8 +66,17 @@ const App = () => {
             <Main/>
           </Route>
       </Switch>
-      <div className="footer" style={{height: '10vh', width: '100%', backgroundColor: 'rgba(189, 218, 236, 0.98)', marginTop: '5em'}}>
-
+      <div className="footer" >
+        <div style={{textAlign: 'center'}}>
+          <a title="source code" target="blank" href="https://github.com/dmitryjima/react-animated-pagination">
+            Source code
+          </a>
+          Data for examples: <a target="blank" href="https://jsonplaceholder.typicode.com/">
+            JSONPlaceholder
+          </a>, <a target="blank" href="https://picsum.photos/">
+            Lorem Picsum
+          </a>
+        </div>
       </div>
     </div>
     </Router>

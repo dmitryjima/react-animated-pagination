@@ -16,7 +16,7 @@ const Posts = () => {
 
   // Conrols-specific state
   const [paginationType, setPaginationType] = useState('PaginationSwipeable');
-  const [infiniteScroll, setInfiniteScroll] = useState(false);
+  const [infiniteFlip, setinfiniteFlip] = useState(false);
   const [bottomNav, setBottomNav] = useState(true);
   const [topNav, setTopNav] = useState(true);
   const [typeOfNavigation, setTypeOfNavigation] = useState('standard')
@@ -89,7 +89,7 @@ const Posts = () => {
         Custom Navigation <SwitchBtn active={typeOfNavigation === 'custom'} onChange={() => setTypeOfNavigation(typeOfNavigation === 'custom' ? 'standart' : 'custom')}/>
         </div> 
         <div style={{width: '48%', textAlign: 'center', opacity: paginationType !== 'PaginationSwipeable' ? '.5' : '1'}}>
-          Infinite Scroll <SwitchBtn disabled={paginationType !== 'PaginationSwipeable'} active={infiniteScroll} onChange={() => setInfiniteScroll(infiniteScroll ? false : true)}/>
+          Infinite Flip <SwitchBtn disabled={paginationType !== 'PaginationSwipeable'} active={infiniteFlip} onChange={() => setinfiniteFlip(infiniteFlip ? false : true)}/>
         </div> 
         <div style={{width: '100%', textAlign: 'center'}}>
           Items on page: <Slider onChange={(value) => setItemsOnPage(value)} value={itemsOnPage}/>
@@ -97,7 +97,7 @@ const Posts = () => {
       </div>
       <CodeDiv
       content={
-`<${paginationType}${paginationType === 'PaginationSwipeable' ? `\n  infiniteScroll={${infiniteScroll}}` : ''}
+`<${paginationType}${paginationType === 'PaginationSwipeable' ? `\n  infiniteFlip={${infiniteFlip}}` : ''}
   bottomNav={${bottomNav ? true : false}}
   topNav={${topNav ? true : false}}${typeOfNavigation === 'custom' ? `\n  customNavigation={CustomNavigation}` : ''}
   itemsOnPage={${itemsOnPage}}
@@ -131,7 +131,7 @@ const Posts = () => {
           topNav={topNav}
           itemsOnPage={itemsOnPage}
           items={posts}
-          infiniteScroll={infiniteScroll}
+          infiniteFlip={infiniteFlip}
           iterationKey={'id'}
           entryProp="post"
           customNavigation={typeOfNavigation === "custom" ? CustomNavigation : null}

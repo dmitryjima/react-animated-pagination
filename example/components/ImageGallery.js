@@ -28,7 +28,7 @@ const ImageGallery = () => {
           topNav={false}
           bottomNav={true}
           itemsOnPage={1}
-          infiniteScroll={true}
+          infiniteFlip={true}
           items={images}
           entryProp="image"
           customNavigation={CustomNavigationImages}
@@ -99,14 +99,14 @@ export const CustomNavigationImages = ({
     handlePageChange,
     currentPage,
     pages,
-    infiniteScroll
+    infiniteFlip
     }) => {
     const [isAutomatic, setAutomatic] = useState(true);
     
     const automaticShow = () => {
         if (pages[currentPage + 1]) {
         handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteScroll) {
+        } else if (!pages[currentPage + 1] && infiniteFlip) {
         handlePageChange(0)
         }
     }
@@ -115,7 +115,7 @@ export const CustomNavigationImages = ({
         setAutomatic(false);
         if (pages[currentPage + 1]) {
         handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteScroll) {
+        } else if (!pages[currentPage + 1] && infiniteFlip) {
         handlePageChange(0)
         }
     }, [handlePageChange, setAutomatic])
@@ -124,7 +124,7 @@ export const CustomNavigationImages = ({
         setAutomatic(false);
         if (pages[currentPage + 1]) {
         handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteScroll) {
+        } else if (!pages[currentPage + 1] && infiniteFlip) {
         handlePageChange(0)
         }
     }, [handlePageChange, setAutomatic]);
@@ -160,7 +160,7 @@ export const CustomNavigationImages = ({
         <button
             className="paginationControlsCustomImages__arrowBtnLeft"
             onClick={() => scrollPrev()}
-            disabled={infiniteScroll !== undefined && infiniteScroll === true ? false : (currentPage === 0 ? true : false)}
+            disabled={infiniteFlip !== undefined && infiniteFlip === true ? false : (currentPage === 0 ? true : false)}
         >
             <svg
             className="bi bi-chevron-left"
@@ -195,7 +195,7 @@ export const CustomNavigationImages = ({
         <button
             className="paginationControlsCustomImages__arrowBtnRight"
             onClick={() => scrollNext()}
-            disabled={infiniteScroll ? false : (currentPage === pages.length - 1 ? true : false)}
+            disabled={infiniteFlip ? false : (currentPage === pages.length - 1 ? true : false)}
         >
             <svg
             className="bi bi-chevron-right"
@@ -329,7 +329,7 @@ const ImageGallery = () => {
           topNav={false}
           bottomNav={true}
           itemsOnPage={1}
-          infiniteScroll={true}
+          infiniteFlip={true}
           items={images}
           entryProp="image"
           customNavigation={CustomNavigationImages}

@@ -81,7 +81,7 @@ export type PaginationAnimatedTypes = {
    * customNextAnimation="myNextAnimation 1s forwards"
    * ```
    */
-    customNextAnimation? : 'string',
+    customNextAnimation? : string,
    /**
    * @param customPrevAnimation The CSS transition animation to the previous page.
    * 
@@ -94,13 +94,13 @@ export type PaginationAnimatedTypes = {
    * customPrevAnimation="myPrevAnimation 1s forwards"
    * ```
    */
-    customPrevAnimation? : 'string',
+    customPrevAnimation? : string,
   /**
    * @param delay The delay of switching the pages in milliseconds.
    * 
-   * Can be used for achieving smoother custom animation effects.
+   * Can be used to achieve smoother custom animation effects.
    * 
-   * @example delay={30}
+   * @example delay={300}
    */
     delay?: number,
   /**

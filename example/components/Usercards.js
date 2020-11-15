@@ -30,7 +30,7 @@ const Usercards = () => {
     <PaginationSwipeable
       topNav={true}
       itemsOnPage={1}
-      infiniteScroll={true}
+      infiniteFlip={true}
       items={visibleUsers}
       entryProp="user"
       customNavigation={CustomNavigationUsercards}
@@ -361,7 +361,7 @@ const Usercards = () => {
         <PaginationSwipeable
           topNav={true}
           itemsOnPage={1}
-          infiniteScroll={true}
+          infiniteFlip={true}
           items={visibleUsers}
           entryProp="user"
           customNavigation={CustomNavigationUsercards}

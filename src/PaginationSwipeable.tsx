@@ -33,11 +33,11 @@ export type PaginationSwipeableTypes = {
    */
     bottomNav?: boolean,
   /** 
-   * @param infiniteScroll Allow infinite scrolling of the pages (only on PaginationSwipeable)
+   * @param infiniteFlip Allow infinite flipping of the pages (only on PaginationSwipeable)
    * 
-   * @example infiniteScroll={true}
+   * @example infiniteFlip={true}
    */ 
-    infiniteScroll?: boolean,
+    infiniteFlip?: boolean,
   /** 
    * @param entryProp The prop to be cloned during the iteration process
    * 
@@ -87,7 +87,7 @@ export type PaginationSwipeableTypes = {
    * customNextAnimation="myNextAnimation 1s forwards"
    * ```
    */
-    customNextAnimation? : 'string',
+    customNextAnimation? : string,
    /**
    * @param customPrevAnimation The CSS transition animation to the previous page.
    * 
@@ -100,13 +100,13 @@ export type PaginationSwipeableTypes = {
    * customPrevAnimation="myPrevAnimation 1s forwards"
    * ```
    */
-    customPrevAnimation? : 'string',
+    customPrevAnimation? : string,
   /**
    * @param delay The delay of switching the pages in milliseconds.
    * 
-   * Can be used for achieving smoother custom animation effects.
+   * Can be used to achieve smoother custom animation effects.
    * 
-   * @example delay={30}
+   * @example delay={300}
    */
     delay?: number,
   
@@ -145,7 +145,7 @@ export type PaginationSwipeableTypes = {
  * @example 
  * ```
  * <PaginationSwipeable
- *   infiniteScroll={true}
+ *   infiniteFlip={true}
  *   bottomNav={true}
  *   topNav={true}
  *   itemsOnPage={5}
@@ -171,7 +171,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
     itemsOnPage,
     topNav,
     bottomNav,
-    infiniteScroll,
+    infiniteFlip,
     entryProp,
     iterationKey,
     customNavigation,
@@ -233,7 +233,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
       if (delta < -_touchSensitivity && posLeft < initialTouch) {
         if (pages[currentPage + 1]) {
           handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteScroll) {
+        } else if (!pages[currentPage + 1] && infiniteFlip) {
           handlePageChange(0)
         } else {
           setPosLeft(0);
@@ -244,7 +244,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
       } else if (delta > _touchSensitivity && posLeft > initialTouch) {
         if (pages[currentPage - 1]) {
           handlePageChange(currentPage - 1)
-        } else if (!pages[currentPage - 1] && infiniteScroll) {
+        } else if (!pages[currentPage - 1] && infiniteFlip) {
           handlePageChange(pages.length - 1)
         } else {
           setPosLeft(0);
@@ -343,7 +343,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
-                infiniteScroll={infiniteScroll}
+                infiniteFlip={infiniteFlip}
                 getContainerRef={() => containerRef.current}
             />
             :
@@ -351,7 +351,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
-                infiniteScroll={infiniteScroll}
+                infiniteFlip={infiniteFlip}
             />
         )
         : 
@@ -388,7 +388,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
-                infiniteScroll={infiniteScroll}
+                infiniteFlip={infiniteFlip}
                 getContainerRef={() => containerRef.current}
                 getCurrentPageRef={() => currentPageRef.current}
             />
@@ -397,7 +397,7 @@ export const PaginationSwipeable: React.FC<PaginationSwipeableTypes> = ({
                 handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 pages={pages}
-                infiniteScroll={infiniteScroll}
+                infiniteFlip={infiniteFlip}
             />
         )
         : 

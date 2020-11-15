@@ -49,16 +49,16 @@ export type NavigationTypes = {
      */
     pages: [][],
     /**
-     * @param infiniteScroll Is the infiniteScroll allowed (on PaginationSwipeable component)
+     * @param infiniteFlip Is the infiniteFlip allowed (on PaginationSwipeable component)
      * 
      * @example 
      * ```
-     * if (!pages[currentPage - 1] && infiniteScroll) {
+     * if (!pages[currentPage - 1] && infiniteFlip) {
      *   handlePageChange(pages.length - 1);
      * }
      * ```
      */
-    infiniteScroll? : boolean,
+    infiniteFlip? : boolean,
     /**
      * @param getContainerRef Returns a reference to the pagination container <div> element
      * 
@@ -85,7 +85,7 @@ export const Navigation: React.FC<NavigationTypes> = ({
     handlePageChange,
     currentPage,
     pages,
-    infiniteScroll
+    infiniteFlip
 }) => {
   return (
     <div className="paginationControls">
@@ -117,11 +117,11 @@ export const Navigation: React.FC<NavigationTypes> = ({
       onClick={() => {
         if (pages[currentPage - 1]) {
           handlePageChange(currentPage - 1)
-        } else if (!pages[currentPage - 1] && infiniteScroll) {
+        } else if (!pages[currentPage - 1] && infiniteFlip) {
           handlePageChange(pages.length - 1)
         }
       }}
-      disabled={ infiniteScroll !== undefined && infiniteScroll === true ? false : (currentPage === 0 ? true : false)}
+      disabled={ infiniteFlip !== undefined && infiniteFlip === true ? false : (currentPage === 0 ? true : false)}
     >
       <svg
         className="bi bi-chevron-left"
@@ -188,11 +188,11 @@ export const Navigation: React.FC<NavigationTypes> = ({
       onClick={() => {
         if (pages[currentPage + 1]) {
           handlePageChange(currentPage + 1)
-        } else if (!pages[currentPage + 1] && infiniteScroll) {
+        } else if (!pages[currentPage + 1] && infiniteFlip) {
           handlePageChange(0)
         }
       }}
-      disabled={infiniteScroll ? false : (currentPage === pages.length - 1 ? true : false)}
+      disabled={infiniteFlip ? false : (currentPage === pages.length - 1 ? true : false)}
     >
       <svg
         className="bi bi-chevron-right"
