@@ -102,10 +102,10 @@ body {
 
 .footer {
   box-sizing: border-box;
-  height: 10vh; 
+  min-height: 10vh; 
   width: 100%;
   background-color: rgba(189, 218, 236, 0.98);
-  margin-top: 5em;
+  margin-top: 3em;
   overflow: hidden;
 }
 .footer a:nth-child(1) {

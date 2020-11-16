@@ -67,7 +67,7 @@ const App = () => {
           </Route>
       </Switch>
       <div className="footer" >
-        <div style={{textAlign: 'center'}}>
+        <div style={{textAlign: 'center', paddingBottom: '1em'}}>
           <a title="source code" target="blank" href="https://github.com/dmitryjima/react-animated-pagination">
             Source code
           </a>

@@ -3,3 +3,6 @@
 node_modules
 .cache
 dist
+!example/dist
+example/dist/*
+!example/dist/_redirects
